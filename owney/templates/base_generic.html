@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>{% block title %}Please set a title here{% endblock %}</title>
+
+<style type="text/css">
+li {
+    padding: 1px;
+}
+.status_acknowledged {
+    background: #FFFF90;
+}
+.status_accepted {
+    background: #FFD700;
+}
+.status_processed {
+    background: #87CEEB;
+}
+.status_arrival {
+    background: #99FF99;
+}
+.status_forwarded {
+    background: #FF8040;
+}
+.status_exception {
+    background: #FF0000;
+    color: #FFFFFF;
+}
+
+</style>
+</head>
+
+<body>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

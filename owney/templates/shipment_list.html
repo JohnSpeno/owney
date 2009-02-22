@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+{% block title %}Undelivered Shipements: {{ num_undelivered }}{% endblock %}
+{% block content %}
+<ul>
+    {% regroup ship_list by created|date:"Y-n-d" as shipments_by_date %}
+    {% for ship_date in shipments_by_date %}
+        <li>Shipped on {{ ship_date.grouper }}</li>
+        <ol>
+        {% for shipment in ship_date.list %}
+            <li class="status_{{ shipment.status }}">
+            <a href="{{ usps_url }}{{ shipment.tracking }}">{{ shipment.tracking }}</a>
+            {<a href="{{ cs_url }}{{ shipment.cs_id }}">{{ shipment.cs_id }}</a>}
+            {{ shipment.status }} {{ shipment.description }}
+            <a href="/admin/track/shipment/{{ shipment.tracking }}">[edit]</a>
+            </li>
+        {% endfor %}
+        </ol>
+    {% endfor %}
+</ul>
+{% endblock %}
