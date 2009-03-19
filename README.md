@@ -14,15 +14,18 @@ dog](http://www.postalmuseum.si.edu/exhibits/2c1f_owney.html). Woof!
 Owney is comprised of several parts. They are:
 
 1. database - The Shipments database. Contains data about each of your
-shipments.
+shipments. This is defined using django's ORM in the owney directory of
+this project.
 
 1. add_shipments.py - a tool to load shipments into your database from an
-Endicia XML output file.
+Endicia XML output file. This is in the tools directory.
 
 1. watch_shipments.py - a tool to periodically update the status of each of
-your shipments. It needs to be run periodically.
+your shipments. It needs to be run periodically. This is also in the tools
+directory.
 
-1. A Django web interface to view and manage your shipments.
+1. A Django web interface to view and manage your shipments. This also lives in
+the owney subdirectory.
 
 Usage
 -----
