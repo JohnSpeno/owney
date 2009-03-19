@@ -5,7 +5,7 @@ from admin import *
 from django.contrib import admin
 admin.autodiscover()
 
-import tracking.track.views 
+import owney.views 
 
 urlpatterns = patterns('owney.views',
     url(r'^admin/(.*)', admin.site.root), 

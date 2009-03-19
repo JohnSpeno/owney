@@ -1,6 +1,7 @@
 #!/usr/bin/python
 """
-Imports packages into Owney's Shipment database from Endicia's XML output file.
+Imports shipments into Owney's Shipment database from an Endicia
+XML output file.
 """
 
 DB_NAME = "shipments.db"
@@ -31,7 +32,7 @@ if __name__ == '__main__':
     import sys
 
     settings.configure(DATABASE_ENGINE=DB_ENGINE,DATABASE_NAME=DB_NAME)
-    from track.models import Shipment
+    from owney.models import Shipment
 
     try:
         sys.exit(main())

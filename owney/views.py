@@ -1,6 +1,7 @@
-from tracking.track.models import Shipment
-from django.shortcuts import render_to_response, get_object_or_404
-from track.conf import settings
+from owney.models import Shipment
+from owney.conf import settings
+
+from django.shortcuts import render_to_response
 
 USPS_URL = getattr(settings, 'TRACKING_USPS_URL')
 CS_URL = getattr(settings, 'TRACKING_CS_URL')

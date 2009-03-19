@@ -164,7 +164,7 @@ def get_usps_status(tracking_nums):
 
 if __name__ == '__main__':
     settings.configure(DATABASE_ENGINE=DB_ENGINE, DATABASE_NAME=DB_NAME)
-    from tracking.track.models import Shipment
+    from owney.models import Shipment
     shipments = Shipment.objects.exclude(status='delivered').order_by(
         'created', 'cs_id')
     trackings = [x.tracking for x in shipments]
