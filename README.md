@@ -1,7 +1,7 @@
 Description
 -----------
 
-Owney is a tool to track United States Postal Service (USPS) packages. It is written
+Owney (rhymes with Poney) is a tool to track United States Postal Service (USPS) packages. It is written
 in Python and uses the USPS webtools API. It also uses Django.
 
 In order to use Owney, you must first register with the USPS to obtain access to their webtools API. You can find details on that process and other "useful" documentation at [USPS Web Tools](http://www.usps.com/webtools/).
