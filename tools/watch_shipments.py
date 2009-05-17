@@ -34,6 +34,7 @@ event_types = {
     'Shipment Accepted' : 'accepted',
     'Acceptance' : 'accepted',
     'Processed' : 'processed',
+    'Processed through Sort Facility' : 'processed',
     'Arrival at Unit' : 'arrival',
     'Arrival at Pick-Up-Point' : 'arrival',
     'Notice Left' : 'exception',
@@ -156,7 +157,9 @@ def get_usps_status(tracking_nums):
             event_date = get_event_date(summary)
             if event not in event_types:
                 # unknown event type. make note of it
-                errs[track_id] = (2, 'Unknown Event found')
+                s = "UNKNONWN event '%s'" % event
+                errs[track_id] = (2, s)
+
             else:
                 status = event_types[event]
                 res[track_id] = (status, event_date, description)
