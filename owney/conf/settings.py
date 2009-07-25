@@ -4,7 +4,7 @@ _TRACKING_USPS_URL = 'http://trkcnfrm1.smi.usps.com/PTSInternetWeb/InterLabelInq
 TRACKING_USPS_URL = getattr(settings, 'TRACKING_USPS_URL', _TRACKING_USPS_URL)
 
 _USPS_API_URL = 'http://production.shippingapis.com/ShippingAPI.dll'
-USPS_API_URL = getattr(settings, 'USPS_API_URL', _USPS_API_URL 
+USPS_API_URL = getattr(settings, 'USPS_API_URL', _USPS_API_URL)
 
 _USPS_API_USERID = 'Set your USPS API userid here'
 USPS_API_USERID = getattr(settings, 'USPS_API_USERID', _USPS_API_USERID) 
