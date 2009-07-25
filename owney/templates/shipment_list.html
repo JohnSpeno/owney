@@ -11,7 +11,7 @@
             <a href="{{ usps_url }}{{ shipment.tracking }}">{{ shipment.tracking }}</a>
             {<a href="{{ cs_url }}{{ shipment.cs_id }}">{{ shipment.cs_id }}</a>}
             {{ shipment.status }} {{ shipment.description }}
-            <a href="/admin/track/shipment/{{ shipment.tracking }}">[edit]</a>
+            <a href="/admin/owney/shipment/{{ shipment.tracking }}">[edit]</a>
             </li>
         {% endfor %}
         </ol>
