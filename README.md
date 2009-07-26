@@ -41,11 +41,14 @@ formats here: <http://mac.endicia.com/extras/xml/>
 1. Edit owney.conf.settings to set the name of your USPS web tools API
 Username and set the base URL for your Customer Service application. You
 may not have one of those. I like this one:
-<http://www.userscape.com/products/helpspot/>
+<http://www.userscape.com/products/helpspot/>. You can also set these in
+your django project's settings module in which case the names are OWNEY_USPS_API_USERID
+and OWNEY_TRACKING_CS_URL.
 
 1. Load your packages data into the database using add_shipments.py.
 
 1. Periodically run watch_shipments.py to poll and update the delivery status of each undelivered package in the database.
+
 
 The Life Cycle of a Shipment
 ----------------------------
