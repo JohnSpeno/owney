@@ -16,7 +16,7 @@ def main():
             if tracking is None:
                 continue
             else:
-                tracking = tracking.text
+                tracking = tracking.text.strip()
             print tracking
             if not tracking.startswith('E'):
                 tracking = tracking[8:]

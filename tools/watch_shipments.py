@@ -173,7 +173,11 @@ if __name__ == '__main__':
     trackings = [x.tracking for x in shipments]
     results, errors = get_usps_status(trackings)
     for track_id, result in results.iteritems():
-        shipment = Shipment.objects.get(pk=track_id)
+        try:
+            shipment = Shipment.objects.get(pk=track_id)
+        except Shipment.DoesNotExist:
+            print >>sys.stderr, "Unknown shipment '%s'" % track_id
+            continue
         old_status = shipment.status
         old_time = shipment.event_time
         status, event_time, description = result
