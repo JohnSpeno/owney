@@ -37,6 +37,7 @@ event_types = {
     'Processed through Sort Facility' : 'processed',
     'Sorting Complete' : 'processed',
     'Arrival at Unit' : 'arrival',
+    'Arrival at Post Office' : 'arrival',
     'Arrival at Pick-Up-Point' : 'arrival',
     'Notice Left' : 'exception',
     'No Such Number' : 'exception',
