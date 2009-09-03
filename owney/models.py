@@ -1,4 +1,5 @@
 from django.db import models
+from managers import ShipmentManager
 
 STATUS_CHOICES = (
     # new = a label has been printed
@@ -32,6 +33,8 @@ class Shipment(models.Model):
     updated = models.DateTimeField(auto_now=True);
     event_time = models.DateTimeField(null=True);
 
+    objects = ShipmentManager()
+
     def __unicode__(self):
         url = self.tracking
         s = "%s (%s) created on %s" % (self.cs_id, url, self.created)
@@ -45,3 +48,4 @@ class Shipment(models.Model):
 
     class Admin:
         pass
+
