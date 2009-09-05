@@ -170,7 +170,7 @@ def get_usps_status(tracking_nums):
 if __name__ == '__main__':
     settings.configure(DATABASE_ENGINE=DB_ENGINE, DATABASE_NAME=DB_NAME)
     from owney.models import Shipment
-    shipments = Shipment.objects.undelivered().order_by('created', 'cs_id')
+    shipments = Shipment.objects.undelivered()
     trackings = [x.tracking for x in shipments]
     results, errors = get_usps_status(trackings)
     for track_id, result in results.iteritems():

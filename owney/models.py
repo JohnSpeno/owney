@@ -35,6 +35,9 @@ class Shipment(models.Model):
 
     objects = ShipmentManager()
 
+    class Meta:
+        ordering = ('created', 'cs_id')
+
     def __unicode__(self):
         url = self.tracking
         s = "%s (%s) created on %s" % (self.cs_id, url, self.created)

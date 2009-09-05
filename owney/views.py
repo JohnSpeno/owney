@@ -10,8 +10,7 @@ def index(request, template_name="shipment_list.html"):
     """
     Display index of undelivered shipments by day.
     """
-    shipments = Shipment.objects.exclude(status='delivered').order_by(
-                    'created', 'cs_id')
+    shipments = Shipment.objects.undelivered()
     num_undelivered = shipments.count() 
     return render_to_response(template_name,
                                 {'num_undelivered' : num_undelivered,
