@@ -62,7 +62,7 @@ tracking number but the USPS does not yet have a record of it.
 1. After some time, your shipment may become *acknowledged* which means that
 the USPS has the electronic record of your tracking number.
 
-1. If your physical shipment is scanned either individually or via inclusion of
+1. If your physical shipment is scanned either individually or via inclusion on
 a SCAN form, then the next status you can expect to see is *accepted*. This
 indicates that your local USPS office took possesion of the shipment. It's in
 their hands now.
@@ -86,7 +86,7 @@ or get lost (they are quite small and easy to overlook). The recipient may need
 to contact their local USPS office to arrange redelivery or pick-up.
 
 * Missent - this one is the fault of the USPS. They sent your shipment
-someplace it should not have gone and they noticed their mistake and re-routed
+someplace it should not have gone, noticed their mistake and re-routed
 the shipment.
 
 And these three exceptions usually mean your shipment is being returned to you.
