@@ -67,8 +67,7 @@ a SCAN form, then the next status you can expect to see is *accepted*. This
 indicates that your local USPS office took possesion of the shipment. It's in
 their hands now.
 
-1. Your package may now be *processed* at one or more USPS sorting facilities as it
-travels towards its destination.
+1. Your package may now be *processed* at one or more USPS sorting facilities as it travels towards its destination.
 
 1. The next status that may happen is *arrival*. This is a good sign that your
 shipment is at the USPS office which will perform its final delivery.
@@ -101,10 +100,18 @@ Of course, not every package goes through every status. Also, for whatever
 reason, sometimes the status changes of your shipments are not updated in a
 timely fashion. For example, you may see a shipment arrive and yet you may not
 get a notice of its delivery until days later, even if the shipment was
-delivered on the same day as it arrived. 
+delivered on the same day as it arrived.
 
-Shipments to US Military Bases (APO) probably won't ever get marked as
-*delivered* so you'll want to do that by hand.
+Shipments to US Military Bases (APO addresses) often won't get marked
+as *delivered* so you'll want to do that by hand.
+
+Another issue that can confuse Owney is when there is a difference between the
+results of a TrackRequest and TrackFieldRequest API calls. Owney uses
+TrackFieldRequest exclusively. You may notice that sometimes the USPS online
+tracking page shows different results than Owney. In those cases, a
+TrackRequest API call would probably show more up to date data, but Owney won't
+know about it unless you edit the shipment by hand.
+
 
 Author
 ------
