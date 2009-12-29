@@ -18,8 +18,6 @@ def main():
             else:
                 tracking = tracking.text.strip()
             print tracking
-            if not tracking.startswith('E'):
-                tracking = tracking[8:]
             try:
                 cs_id = package.find('ReferenceID').text
             except AttributeError:
