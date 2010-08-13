@@ -127,10 +127,10 @@ def get_usps_status(tracking_nums):
     errs = {} 
     res = {}
     for batch in split_seq(tracking_nums, MAX_TRACK): 
-        data = get_tracking(batch)
-        if data is None:
+        response = get_tracking(batch)
+        if response is None:
             continue
-        tree = et.parse(data)
+        tree = et.parse(response)
         top = tree.getroot()
         if top.tag == 'Error': 
             enumber = top.find('Number').text
