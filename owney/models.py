@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from managers import ShipmentManager
 
@@ -23,11 +24,11 @@ class Shipment(models.Model):
     """
     A USPS Shipment
     """
-    tracking = models.CharField("tracking number", max_length=32,
-                                primary_key=True)
+    tracking = models.CharField(
+        "tracking number", max_length=32, primary_key=True)
     cs_id = models.CharField("Request ID", max_length=32)
-    status = models.CharField(max_length=64, default="new",
-                                choices=STATUS_CHOICES)
+    status = models.CharField(
+        max_length=64, default="new", choices=STATUS_CHOICES)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True);
     updated = models.DateTimeField(auto_now=True);
@@ -43,12 +44,17 @@ class Shipment(models.Model):
         s = "%s (%s) created on %s" % (self.cs_id, url, self.created)
         if self.status == 'delivered':
             s += ", delivered on %s" % self.updated
-        return s 
+        return s
 
     @property
     def ship_date(self):
         return self.created.date()
 
-    class Admin:
-        pass
+    @property
+    def age(self):
+        if self.status == 'delivered':
+            delta = self.event_time - self.created
+        else:
+            delta = datetime.datetime.now() - self.created
+        return delta.days
 
