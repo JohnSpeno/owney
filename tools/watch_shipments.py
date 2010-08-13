@@ -17,12 +17,10 @@ from django.conf import settings
 from xml.etree import ElementTree as et
 
 from owney.conf.settings import USPS_API_USERID, USPS_API_URL
+from owney.models import Shipment
 
 # Number of tracking numbers to lookup at once
 MAX_TRACK = 10
-
-DB_NAME = "shipments.db"
-DB_ENGINE='sqlite3'
 
 EV_NSN = "No Such Number"
 EV_NOTICE = "Notice Left"
@@ -157,7 +155,11 @@ def get_usps_status(tracking_nums):
                 errs[track_id] = (2, 'No Event found')
                 continue
             description = ' '.join(summary.textlist())
-            event_date = get_event_date(summary)
+            try:
+                event_date = get_event_date(summary)
+            except AttributeError:
+                errs[track_id] = (2, 'Bad event date')
+                continue
             if event not in event_types:
                 # unknown event type. make note of it
                 s = "Unknown event '%s'" % event
@@ -168,9 +170,7 @@ def get_usps_status(tracking_nums):
                 res[track_id] = (status, event_date, description)
     return res, errs
 
-if __name__ == '__main__':
-    settings.configure(DATABASE_ENGINE=DB_ENGINE, DATABASE_NAME=DB_NAME)
-    from owney.models import Shipment
+def main():
     shipments = Shipment.objects.undelivered()
     trackings = [x.tracking for x in shipments]
     results, errors = get_usps_status(trackings)
@@ -206,3 +206,5 @@ if __name__ == '__main__':
             missing = missing + 1
     if missing:
         print "FYI: %d packages have no records yet" % missing
+if __name__ == '__main__':
+    sys.exit(main())
