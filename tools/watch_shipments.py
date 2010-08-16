@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 """
 get tracking for each undelivered shipment that has no exception
 if tracksummary's event is delivered, mark shipment as delivered.
@@ -77,7 +78,8 @@ def split_seq(seq, size):
     Source:  http://code.activestate.com/recipes/425044"""
     return [seq[i:i+size] for i in range(0, len(seq), size)]
 
-_months = [None,
+_months = [
+    None,
     'January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'
 ]
@@ -88,14 +90,19 @@ def get_event_date(summary):
     object from its EventTime and EventDate fields.
     """
     etime = summary.find('EventTime').text
-    hour, rest = etime.split(':')
-    hour = int(hour)
-    minute, am_or_pm = rest.split(' ')
-    minute = int(minute)
-    if am_or_pm == 'pm' and hour != 12:
-        hour += 12
-    elif am_or_pm == 'am' and hour == 12:
-        hour = 0 
+    try:
+        hour, rest = etime.split(':')
+        hour = int(hour)
+        minute, am_or_pm = rest.split(' ')
+        minute = int(minute)
+        if am_or_pm == 'pm' and hour != 12:
+            hour += 12
+        elif am_or_pm == 'am' and hour == 12:
+            hour = 0 
+    except AttributeError:
+        now = datetime.datetime.now()
+        hour = now.hour
+        minute = now.minute
     edate = summary.find('EventDate').text
     first, year = edate.split(',')
     year = int(year)
@@ -155,11 +162,7 @@ def get_usps_status(tracking_nums):
                 errs[track_id] = (2, 'No Event found')
                 continue
             description = ' '.join(summary.textlist())
-            try:
-                event_date = get_event_date(summary)
-            except AttributeError:
-                errs[track_id] = (2, 'Bad event date')
-                continue
+            event_date = get_event_date(summary)
             if event not in event_types:
                 # unknown event type. make note of it
                 s = "Unknown event '%s'" % event
@@ -175,6 +178,7 @@ def main():
     trackings = [x.tracking for x in shipments]
     results, errors = get_usps_status(trackings)
     for track_id, result in results.iteritems():
+        new_status, event_time, description = result
         try:
             shipment = Shipment.objects.get(pk=track_id)
         except Shipment.DoesNotExist:
@@ -182,15 +186,16 @@ def main():
             continue
         old_status = shipment.status
         old_time = shipment.event_time
-        status, event_time, description = result
-        shipment.status = status
-        shipment.event_time = event_time
-        shipment.description = description
-        if (old_status != status) or (old_time != event_time):
-            if status == 'exception':
+        if new_status == 'acknowledged' and old_status == 'acknowledged':
+            continue 
+        if (old_status != new_status) or (old_time != event_time):
+            shipment.status = new_status
+            shipment.event_time = event_time
+            shipment.description = description
+            if new_status == 'exception':
                 print "**** ",
             print '%s: {%s} %s %s -> %s %s' % (shipment.ship_date,
-                shipment.cs_id, track_id, old_status, status, event_time)
+                shipment.cs_id, track_id, old_status, new_status, event_time)
             shipment.save()
 
     missing = 0
@@ -206,5 +211,6 @@ def main():
             missing = missing + 1
     if missing:
         print "FYI: %d packages have no records yet" % missing
+
 if __name__ == '__main__':
     sys.exit(main())
