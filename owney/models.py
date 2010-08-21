@@ -44,7 +44,7 @@ class Shipment(models.Model):
 
     def save(self):
         now = datetime.datetime.now()
-        if not self.tracking:
+        if not self.created:
             self.created = now 
         self.updated = now
         super(Shipment, self).save()
