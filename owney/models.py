@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+
 from managers import ShipmentManager
 
 STATUS_CHOICES = (
@@ -22,13 +23,15 @@ STATUS_CHOICES = (
 
 class Shipment(models.Model):
     """
-    A USPS Shipment
+    A USPS Shipment.
     """
     tracking = models.CharField(
-        "tracking number", max_length=32, primary_key=True)
+        "tracking number", max_length=32, primary_key=True
+    )
     cs_id = models.CharField("Request ID", max_length=32)
     status = models.CharField(
-        max_length=64, default="new", choices=STATUS_CHOICES)
+        max_length=64, default="new", choices=STATUS_CHOICES
+    )
     description = models.TextField()
     created = models.DateTimeField();
     updated = models.DateTimeField();
@@ -47,21 +50,25 @@ class Shipment(models.Model):
         super(Shipment, self).save()
 
     def __unicode__(self):
-        url = self.tracking
-        s = "%s (%s) created on %s" % (self.cs_id, url, self.created)
+        s = u"%s {%s} created on %s" % (
+            self.tracking, self.cs_id, self.ship_date
+        )
         if self.status == 'delivered':
-            s += ", delivered on %s" % self.updated
+            s += ", delivered on %s" % self.event_time.date()
         return s
 
     @property
     def ship_date(self):
+        """Return date of shipment."""
         return self.created.date()
 
     @property
     def age(self):
+        """Return age of shipment in days."""
+        then = self.ship_date
         if self.status == 'delivered':
-            delta = self.event_time - self.created
+            now = self.event_time.date()
         else:
-            delta = datetime.datetime.now() - self.created
+            now = datetime.datetime.now().date()
+        delta = now - then
         return delta.days
-
