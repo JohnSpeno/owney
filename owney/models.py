@@ -30,14 +30,21 @@ class Shipment(models.Model):
     status = models.CharField(
         max_length=64, default="new", choices=STATUS_CHOICES)
     description = models.TextField()
-    created = models.DateTimeField(auto_now_add=True);
-    updated = models.DateTimeField(auto_now=True);
+    created = models.DateTimeField();
+    updated = models.DateTimeField();
     event_time = models.DateTimeField(null=True);
 
     objects = ShipmentManager()
 
     class Meta:
         ordering = ('created', 'cs_id')
+
+    def save(self):
+        now = datetime.datetime.now()
+        if not self.tracking:
+            self.created = now 
+        self.updated = now
+        super(Shipment, self).save()
 
     def __unicode__(self):
         url = self.tracking
