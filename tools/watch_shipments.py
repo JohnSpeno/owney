@@ -39,6 +39,7 @@ event_types = {
     'Arrival at Post Office' : 'arrival',
     'Arrival at Pick-Up-Point' : 'arrival',
     'Out for Delivery or Available at PO Box' : 'arrival',
+    'Delivery status not updated' : 'arrival',
     'Notice Left' : 'exception',
     'No Such Number' : 'exception',
     'Undeliverable as Addressed' : 'exception',
