@@ -115,9 +115,7 @@ know about it unless you edit the shipment by hand.
 
 Author
 ------
-John P. Speno speno@macspeno.com
-
-[http://macspeno.com/jps/](http://macspeno.com/jps/)
+John P. Speno john@macspeno.com
 
 Thanks
 ------
